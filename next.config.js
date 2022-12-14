@@ -1,8 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	reactStrictMode: true,
-	swcMinify: true,
-	webpack: function (config, options) {
+  reactStrictMode: true,
+  swcMinify: true,
+  async redirects() {
+    return [
+      {
+        source: '/home',
+        destination: '/admin/users',
+        basePath: false,
+        permanent: false
+      }
+    ]
+  },
+  webpack: function (config, options) {
 		config.experiments = {
 			asyncWebAssembly: true,
 			layers: true,
