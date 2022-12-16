@@ -1,33 +1,22 @@
-import { Container, Typography, Box, Stack, Grid, Avatar } from "@mui/material";
-import { flexbox } from "@mui/system";
+import { Container, Typography, Box, Stack, Grid, Avatar, Table, TableContainer, TableBody } from "@mui/material";
+import Paper from '@mui/material/Paper';
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableRow, { tableRowClasses } from "@mui/material/TableRow";
+
+function createData(
+  src: string,
+  name: string,
+  size: number,
+) {
+  return { src, name, size };
+}
 
 const dataTmp = [
-  {
-    'src': "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    'name': 'The Art Bank ',
-    'size': 20
-  },
-  {
-    'src': "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    'name': 'Aaron Arfmani',
-    'size': 18
-  },
-  {
-    'src': "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    'name': 'Vitaliy Kydon',
-    'size': 15
-  },
-  {
-    'src': "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    'name': 'Random Guy',
-    'size': 10
-  },
-  {
-    'src': "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    'name': 'Nice Girl',
-    'size': 8
-  }
-]
+  createData('https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80', 'Aaron Arfmani', 18),
+  createData('https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80', 'Vitaliy Kydon', 15),
+  createData('https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80', 'Random Guy', 10),
+  createData('https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80', 'Nice Girl', 8),
+];
 
 export default function Leaderboardz() {
   
@@ -49,16 +38,37 @@ export default function Leaderboardz() {
           <Typography align="center">5</Typography>
         </Stack>
       </Box>
-      {/* <Grid container rowSpacing={1}>
-        {
-          dataTmp.map((row, index) =>
-            <Grid item>{ index + 1 }</Grid>
-            <Grid item><Avatar src={ row.src } /></Grid>
-            <Grid item>{ row.name }</Grid>
-            <Grid item>{ row.size }</Grid>
-          )
-        }
-      </Grid> */}
+      <TableContainer component={Paper}>
+        <Table
+          sx={{
+            [`& .${tableCellClasses.root}`]: {
+              borderBottom: "none"
+            },
+            [`& .${tableRowClasses.root}:after`]: {
+                content: '""',
+                display: 'block',
+                margin: '0 auto',
+                width: '80%',
+                paddingTop: '20px',
+                height: '50%',
+                borderBottom: '5px solid #1243FE'
+            },
+          }}
+        >
+          <TableBody>
+            {
+              dataTmp.map((row, index) =>
+                <TableRow key={index + 1} sx={{ background: '#011335' }}>
+                  <TableCell align="right" sx={{ width: '5%', color: '#FEFEFE' }}>{ index + 1 }</TableCell>
+                  <TableCell align="left" sx={{ width: '5%' }}><Avatar src={row.src} /></TableCell>
+                  <TableCell sx={{ width: '80%', color: '#FEFEFE' }}>{ row.name }</TableCell>
+                  <TableCell sx={{ width: '10%', color: '#FEFEFE' }}>{ row.size }</TableCell>
+                </TableRow>
+              )
+            }
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Container>
   );
 }
